@@ -92,25 +92,29 @@ function unLike() {
     private func like(){
         SoundUseCase.playSound(type: .correct1)
         
-        self.webView.evaluateJavaScript(
-            "like();",
-            completionHandler: { result, error in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    self.processFace(){ }
-                }
-        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.webView.evaluateJavaScript(
+                "like();",
+                completionHandler: { result, error in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.processFace(){ }
+                    }
+            })
+        }
     }
     
     private func unLike(){
         SoundUseCase.playSound(type: .incorrect1)
         
-        self.webView.evaluateJavaScript(
-            "unLike();",
-            completionHandler: { result, error in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.processFace(){ }
-                }
-        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.webView.evaluateJavaScript(
+                "unLike();",
+                completionHandler: { result, error in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.processFace(){ }
+                    }
+            })
+        }
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
